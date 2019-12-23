@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using DAL.UnitOfWork;
 using LibServer.DataBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,9 +11,9 @@ namespace WebApplication1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUnitOfWork _unit;
+        private readonly IMyDbUnit _unit;
 
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unit)
+        public HomeController(ILogger<HomeController> logger, IMyDbUnit unit)
         {
             _logger = logger;
             _unit = unit;

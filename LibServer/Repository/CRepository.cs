@@ -8,14 +8,15 @@ using System.Linq.Expressions;
 
 namespace LibServer.Repository
 {
-    public class CRepository<TEntity> : IRepository<TEntity>
+    public class CRepository<TDbContext, TEntity> : IRepository<TEntity>
+        where TDbContext : DbContext
         where TEntity : class
     {
         protected DbContext Context { get; private set; }
 
         protected DbSet<TEntity> Set => Context.Set<TEntity>();
 
-        public CRepository(DbContext dbContext)
+        public CRepository(TDbContext dbContext)
         {
             Context = dbContext;
         }
@@ -49,6 +50,11 @@ namespace LibServer.Repository
                 Set.Attach(entity);
             entry.State = EntityState.Modified;
         }
+
+        //public void StoredProcedure(string storedProcedureName, IEnumerable<IDataParameter> parameters = null)
+        //{
+        //    Context.FromSqlRaw($"EXECUTE MyStoredProcedure");
+        //}
 
         public virtual PaginatedList<TEntity> GetPaged(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
                    int pageIndex = 1, int pageSize = 10,

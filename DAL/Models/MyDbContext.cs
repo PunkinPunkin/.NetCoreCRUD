@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DAL.Models
 {
@@ -12,6 +13,11 @@ namespace DAL.Models
             : base(options)
         {
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //{
+        //    options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=MyDb;Trusted_Connection=True;");
+        //}
 
         public virtual DbSet<ApUser> ApUsers { get; set; }
         public virtual DbSet<LoginRecord> LoginRecords { get; set; }

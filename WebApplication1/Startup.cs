@@ -1,4 +1,5 @@
 using DAL.Models;
+using DAL.UnitOfWork;
 using LibServer.DataBase;
 using LibServer.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -25,8 +26,7 @@ namespace WebApplication1
             services.AddDbContext<MyDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
 
-            services.AddScoped<DbContext, MyDbContext>();
-            services.AddScoped<IUnitOfWork, CUnitOfWork>();
+            services.AddScoped<IMyDbUnit, MyDbUnit>();
             services.AddControllersWithViews();
         }
 

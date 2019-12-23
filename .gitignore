@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/DAL/Migrations/20191223153618_MyDbInit.cs
+/DAL/Migrations/20191223153618_MyDbInit.Designer.cs
+/DAL/Migrations

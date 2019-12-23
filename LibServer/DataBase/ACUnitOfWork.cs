@@ -9,9 +9,10 @@ namespace LibServer.DataBase
     /// <summary>
     /// 實作Entity Framework Unit Of Work的class
     /// </summary>
-    public class CUnitOfWork : IUnitOfWork
+    public abstract class ACUnitOfWork<TDbContext> : IUnitOfWork
+           where TDbContext : DbContext
     {
-        private readonly DbContext _context;
+        private readonly TDbContext _context;
 
         private bool _disposed;
         private Hashtable _repositories;
@@ -20,10 +21,7 @@ namespace LibServer.DataBase
         /// 設定此Unit of work(UOF)的Context。
         /// </summary>
         /// <param name="context">設定UOF的context</param>
-        public CUnitOfWork(DbContext context)
-        {
-            _context = context;
-        }
+        public ACUnitOfWork(TDbContext context) => _context = context;
 
         /// <summary>
         /// 儲存所有異動。
@@ -76,8 +74,8 @@ namespace LibServer.DataBase
             var type = typeof(T).Name;
             if (!_repositories.ContainsKey(type))
             {
-                var repositoryType = typeof(CRepository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _context);
+                var repositoryType = typeof(CRepository<,>);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TDbContext), typeof(T)), _context);
                 _repositories.Add(type, repositoryInstance);
             }
 
